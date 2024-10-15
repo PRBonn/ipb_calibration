@@ -1,0 +1,35 @@
+services:
+  systemcalib:
+    build: .
+
+    # Mounted paths from the repo into the docker:
+    volumes:
+      # The folder with the recorded images and scans
+      - $PWD/input:/root/input:ro
+      # The folder with the reference data: room scan and apriltag coords
+      - $PWD/reference:/root/reference:ro
+      # The output of the calibration
+      - $PWD/output:/root/output
+      # X11 socket for enabling display of windows from inside the container
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+    environment:
+      # for enabling window display from inside the container
+      - DISPLAY=${DISPLAY}
+    # The following is needed for allowing 3D view window inside the container.
+    # An nvidia GPU is needed. If no visualization is needed and you have no
+    # nvidia GPU, this can be commented out.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu, compute,utility,graphics]
+
+
+#    # Start it interactively
+#    entrypoint: /bin/bash
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    

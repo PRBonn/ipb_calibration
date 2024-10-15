@@ -1,0 +1,17 @@
+[project]
+name = "ipb_calibration"
+description = "IPB Car Calibration"
+version = "0.0.1"
+dependencies = [
+    "matplotlib",
+    "tqdm",
+    "opencv_python",
+    "numpy",
+    "pandas",
+    "diskcache",
+    "natsort",
+    "Click",
+    "PyYAML",
+    "scipy",
+    "open3d",
+]
