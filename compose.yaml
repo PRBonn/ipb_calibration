@@ -1,4 +1,5 @@
 services:
+  ## System calibration with given apriltag 3D coordinates
   systemcalib:
     build: .
 
@@ -26,6 +27,47 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu, compute,utility,graphics]
+
+    # the following avoids to start this service if a specific profile is given in docker compose              
+    profiles:
+      - ''
+
+
+  ## Apriltag coordinates extraction for system calibration
+  apriltag_extraction:
+    build:
+      context: .
+      dockerfile: apriltag_extraction.Dockerfile
+
+    # Mounted paths from the repo into the docker:
+    volumes:
+      # The folder with the recorded tls scan
+      - $PWD/input:/root/input:ro
+      # The configuration for the walls in the room
+      - $PWD/config:/root/config:ro
+      # The output of the apriltag extraction
+      - $PWD/output:/root/output
+      # X11 socket for enabling display of windows from inside the container
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+    environment:
+      # for enabling window display from inside the container
+      - DISPLAY=${DISPLAY}
+    # The following is needed for allowing 3D view window inside the container.
+    # An nvidia GPU is needed. If no visualization is needed and you have no
+    # nvidia GPU, this can be commented out.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu, compute,utility,graphics]
+
+    # Don't use this service per default. Only use it in profile "apriltag_extraction"
+    # e.g. with docker compose --profile apriltag_extraction up --build
+    profiles:
+      - apriltag_extraction
 
 
 #    # Start it interactively
