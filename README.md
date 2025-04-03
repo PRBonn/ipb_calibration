@@ -1,34 +1,4 @@
-# Joint Intrinsic and Extrinsic Calibration of Perception Systems Utilizing a Calibration Environment
-
-
-![image](https://github.com/user-attachments/assets/1f3d64c6-fd31-4bf7-adef-cfa7cda43e56)
-
-<div style="width:500px">
-Basically all multi-sensor systems must calibrate
-their sensors to exploit their full potential for state estimation
-such as mapping and localization. In this paper, we investigate
-the problem of extrinsic and intrinsic calibration of perception
-systems. Traditionally, targets in the form of checkerboards or
-uniquely identifiable tags are used to calibrate those systems.
-We propose to use a whole calibration environment as a target
-that supports the intrinsic and extrinsic calibration of different
-types of sensors. By doing so, we are able to calibrate multiple
-perception systems with different configurations, sensor types,
-and sensor modalities. Our approach does not rely on overlaps
-between sensors which is often otherwise required when using
-classical targets. The main idea is to relate the measurements for
-each sensor to a precise model of the calibration environment.
-For this, we can choose for each sensor a specific method that best
-suits its calibration. Then, we estimate all intrinsics and extrinsics
-jointly using least squares adjustment. For the final evaluation
-of a LiDAR-to-camera calibration of our system, we propose an
-evaluation method that is independent of the calibration. This
-allows for quantitative evaluation between different calibration
-methods. The experiments show that our proposed method is
-able to provide reliable calibration.
-</div>
-
-## Perception System Calibration
+# Perception System Calibration
 
 This repository contains the full setup for the system calibration (relative
 poses between the sensors + intrinsics) for multipe Cameras and/ or LiDAR sensors.
@@ -43,8 +13,13 @@ Next we have to record with the setup that should be recorded. After recording w
 We provide exemplary data here:
 - Point Cloud and Apriltag Coordinates: [Download here](https://www.ipb.uni-bonn.de/html/projects/ipb_calibration/reference_data.zip)
 
+#### Using own data
 
-If you want to use your own data: Take a TLS and scan the room. To reduce the compute time I suggest using cloud compare to downsample to half a centimeter resolution and precompute the normals. We assume the point cloud to be in PLY file format.
+If you want to use your own data: Take a TLS and scan the room. Then use the apriltag coordinate extraction software we provide in this repository. This will
+extract 3D coordinates of the apriltags. Use these coordinates later as reference data in folder `reference`. A detailed
+description for the apriltag extraction is provided [here](README_apriltag_extraction.md).
+
+For the system calibration: To reduce the compute time I suggest using cloud compare to downsample to half a centimeter resolution and precompute the normals. We assume the point cloud to be in PLY file format.
 
 ### Data recording
 
@@ -74,7 +49,7 @@ We provide exemplary data here:
 To run the calibration use `lcba.py` for calibrating the ipb-car. One can probably leave most of the default parameters as they are.
 In the end the point clouds should be well aligned to the reference map and the camera rays should intersect the apriltag corners.
 
-## Docker
+## Docker for system calibration
 
 A configuration for docker is available. We provide a Dockerfile together with a docker compose configuration which mounts necessary directories
 from the hosts system for input and output. To prepare a run in a docker container provide the following:
@@ -119,7 +94,3 @@ We highly recommend using docker. In case it is not needed you can take a look a
 Most importantly:
 Install the [AprilTag library](https://github.com/AprilRobotics/apriltag/releases/tag/v3.4.2) (tested under 3.4.2).
 Install this repository (e.g. `pip install -e .`)
-
-## ToDos
-- [ ] Add scripts for extracting the Apriltag coordinates from the TLS point cloud
-- [ ] Add evaluation script and data.

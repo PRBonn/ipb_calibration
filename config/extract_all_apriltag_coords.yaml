@@ -1,0 +1,112 @@
+# Configuration file for extraction of apriltags out of a scan of a room. 
+# The room is separated in walls. For every wall an orthophoto will be generated.
+
+# Name of the pointcloud file. Can be .ptx from a Faro scanner or any other format (e.g. ply) 
+# readable by open3d. Must have intensity.
+scanfilename: /root/input/tls_scan.ply
+
+# Working directory: Here all orthophotos and resulting coordinates will be saved
+working_dir: /root/output/apriltag_extraction
+
+# Ground Sampling distance or pixel size of the orthophotos 
+# This is the resolution of the orthophotos in object space, usally in meters. 
+# Should be in a similar range of the nearest distance
+# of the points on the walls
+pixel_size: 0.002
+
+# List of walls. For every wall there will be created an orthophoto and the
+# april tags will be extracted on that orthophoto.
+walls:
+  wallXpositive:
+    # Give the axis which is perpendicular to the wall. X=1, Y=2, Z=3
+    # If you look into negative axis direction, give -1 for X, -2 for Y,
+    # -3 for Z. Note that looking into positive/negative direction means
+    # that the orthophoto is flipped/mirrored. Then the tag code
+    # cannot be recognized any more.
+    projection_direction: 1
+    # Give a bounding box (minX, minY, minZ, maxX, maxY, maxZ) for the wall
+    # The important thing here is that for parallel walls only one wall has to
+    # appear inside the bounding box
+    bounding_box: 
+    -   0
+    - -10
+    - -10
+    -  10
+    -  10
+    -  10
+
+  wallXnegative:
+    # Give the axis which is perpendicular to the wall. X=1, Y=2, Z=3
+    projection_direction: -1
+    # Give a bounding box (minX, minY, minZ, maxX, maxY, maxZ) for the wall
+    # The important thing here is that for parallel walls only one wall has to
+    # appear inside the bounding box
+    bounding_box: 
+    - -10
+    - -10
+    - -10
+    -   0
+    -  10
+    -  10
+
+  wallYpositive:
+    # Give the axis which is perpendicular to the wall. X=1, Y=2, Z=3
+    # If you look into negative axis direction, give -1 for X, -2 for Y,
+    # -3 for Z. Note that looking into positive/negative direction means
+    # that the orthophoto is flipped/mirrored. Then the tag code
+    # cannot be recognized any more.
+    projection_direction: 2
+    # Give a bounding box (minX, minY, minZ, maxX, maxY, maxZ) for the wall
+    # The important thing here is that for parallel walls only one wall has to
+    # appear inside the bounding box
+    bounding_box: 
+    - -10
+    -   0
+    - -10
+    -  10
+    -  10
+    -  10
+
+  wallYnegative:
+    # Give the axis which is perpendicular to the wall. X=1, Y=2, Z=3
+    projection_direction: -2
+    # Give a bounding box (minX, minY, minZ, maxX, maxY, maxZ) for the wall
+    # The important thing here is that for parallel walls only one wall has to
+    # appear inside the bounding box
+    bounding_box: 
+    - -10
+    - -10
+    - -10
+    -  10
+    -   0
+    -  10
+    
+  wallZpositive:
+    # Give the axis which is perpendicular to the wall. X=1, Y=2, Z=3
+    # If you look into negative axis direction, give -1 for X, -2 for Y,
+    # -3 for Z. Note that looking into positive/negative direction means
+    # that the orthophoto is flipped/mirrored. Then the tag code
+    # cannot be recognized any more.
+    projection_direction: 3
+    # Give a bounding box (minX, minY, minZ, maxX, maxY, maxZ) for the wall
+    # The important thing here is that for parallel walls only one wall has to
+    # appear inside the bounding box
+    bounding_box: 
+    - -10
+    - -10
+    -   0
+    -  10
+    -  10
+    -  10
+
+    
+    
+
+# --------------------------------------------------------
+# Optional arguments:
+
+# Pyramid level of the smallest images used. In order to detect very large
+# apriltags, the tag detection in not only done on the original image, but also 
+# on higher image pyramid levels. This is the highest image pyramid level number. 
+# 0 == original size, 1 == half rows/cols of original, ... Default is: 2
+# max_pyramid_level: 2

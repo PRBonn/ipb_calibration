@@ -67,7 +67,7 @@ RUN pip --no-cache-dir install -e .
 # =============================================================================
 # Now do the actual work: Start the camera system and LiDAR calibration
 WORKDIR /root
-COPY entrypoint.bash /root/entrypoint.bash
+COPY entrypoint_apriltag_extraction.bash /root/entrypoint_apriltag_extraction.bash
 
-CMD /root/entrypoint.bash
+CMD /root/entrypoint_apriltag_extraction.bash
 
