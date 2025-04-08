@@ -29,7 +29,7 @@ def convert_dict(d, u=None):
 @click.option("--std_pix", "-sp", default=0.2, help="Standard deviation of the apriltag detection in the image [pix]. (default=0.2)")
 @click.option("--std_apriltags", "-sa", default=0.002, help="Standard deviation of the 3D coordinates of the Apriltags.(default=0.002)")
 @click.option("--std_lidar", "-sl", default=0.01, help="Standard deviation of the LiDAR points. (default=0.01)")
-@click.option("--max_scanpoints", "-mp", default=1000, type=int, help="Maximal number of used lidar points per scan. Give -1 to use all points. (default=1000)")
+@click.option("--max_scanpoints", "-mp", default=1200, type=int, help="Maximal number of used lidar points per scan. Give -1 to use all points. (default=1200)")
 @click.option("--bias/--no-bias", default=True, help="Flag if one wants to estimate a bias for each LiDAR. (default=True)")
 @click.option("--scale/--no-scale", default=True, help="Flag if one wants to estimate a scale for each LiDAR. (default=True)")
 @click.option("--division_model/--no-division_model", default=True, help="Flag if to estimate the non-linear distortion with the brownsche distortion model or the division model. (default=True)")
